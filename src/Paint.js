@@ -33,6 +33,7 @@ class Paint extends React.Component {
         }).then(canvas => {
             console.log(canvas.toDataURL())
             document.body.appendChild(canvas)
+            document.getElementById("hint").style.display="block";
         });
     }
 
@@ -84,6 +85,7 @@ class Paint extends React.Component {
             >
                 <Lines lines={this.state.lines} />
                 <button className="button" onClick={this.screenshot}>Screenshot</button>
+                <p id="hint" style={{"display":"none"}} >Check the console to get the base64 encoded data URL</p>
             </div>
         );
     }
