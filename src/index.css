@@ -4,13 +4,14 @@ body {
 }
 
 .paintZone {
-  width: 350px;
-  height: 300px;
+  width: 600px;
+  height: 500px;
   border: 1px solid black;
   float: left;
   cursor: crosshair;
   background-repeat: no-repeat;
-  background-image: url(https://yassinmokni.me/images/avatar.jpg)
+  background-image: url(https://yassine-mokni.github.io/screenshot-paint/mug.png);
+  /* background: grey; */
 }
 
 .path {

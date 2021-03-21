@@ -10,7 +10,7 @@ class Paint extends React.Component {
         this.paintZone = React.createRef();
         this.state = {
             lines: new List(),
-            isPainting: false
+            isPainting: false,
         };
 
         this.screenshot = this.screenshot.bind(this);
@@ -21,6 +21,24 @@ class Paint extends React.Component {
 
     componentDidMount() {
         document.addEventListener("mouseup", this.handleMouseUp);
+
+        const zone = document.getElementById('paint');
+        const image = document.getElementById('image');
+        image.crossOrigin = "Anonymous";
+        zone.addEventListener('mousemove',function(e) {
+            if(!this.canvas) {
+                this.canvas = document.createElement('canvas');
+                this.canvas.width = image.width;
+                this.canvas.height = image.height;
+                this.canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+            }
+            var pixelData = this.canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
+            if(pixelData[0]==0&&pixelData[1]==0&&pixelData[2]==0&&pixelData[3]==255) {
+                this.setState({ isPainting: false });
+            }
+        }.bind(this));
+    
+
     }
 
     componentWillUnmount() {
@@ -58,9 +76,7 @@ class Paint extends React.Component {
         if (!this.state.isPainting) {
             return;
         }
-
         const point = this.pointCoordinates(mouseEvent);
-
         this.setState(prevState => ({
             lines: prevState.lines.updateIn([prevState.lines.size - 1], line => line.push(point))
         }));
@@ -86,6 +102,7 @@ class Paint extends React.Component {
                 <Lines lines={this.state.lines} />
                 <button className="button" onClick={this.screenshot}>Screenshot</button>
                 <p id="hint" style={{"display":"none"}} >Check the console to get the base64 encoded data URL</p>
+                <img id="image" src="https://yassine-mokni.github.io/screenshot-paint/mug.png" style={{"visibility":"hidden"}}/>
             </div>
         );
     }
