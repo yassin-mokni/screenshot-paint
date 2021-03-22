@@ -4,8 +4,8 @@ body {
 }
 
 .paintZone {
-  width: 500px;
-  height: 500px;
+  width: 480px;
+  height: 460px;
   border: 1px solid black;
   float: left;
   cursor: crosshair;
